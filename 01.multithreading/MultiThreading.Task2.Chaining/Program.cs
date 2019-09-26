@@ -6,12 +6,17 @@
  * Fourth Task – calculates the average value. All this tasks should print the values to console.
  */
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MultiThreading.Task2.Chaining
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static readonly Random Random = new Random();
+        private const int ArrayLength = 10;
+
+        private static async Task Main(string[] args)
         {
             Console.WriteLine(".Net Mentoring Program. MultiThreading V1 ");
             Console.WriteLine("2.	Write a program, which creates a chain of four Tasks.");
@@ -21,9 +26,76 @@ namespace MultiThreading.Task2.Chaining
             Console.WriteLine("Fourth Task – calculates the average value. All this tasks should print the values to console");
             Console.WriteLine();
 
-            // feel free to add your code
+            await Task.Factory.StartNew(CreateRandomNumbers)
+                .ContinueWith(antecedent => MultiplyRamdomNumbers(antecedent.Result))
+                .ContinueWith(antecedent => SortRandomNumbersByDescending(antecedent.Result))
+                .ContinueWith(antecedent => CalculateAverage(antecedent.Result));
 
             Console.ReadLine();
+        }
+
+        private static int[] CreateRandomNumbers()
+        {
+            var randomNumbers = new int[ArrayLength];
+            for (var i = 0; i < randomNumbers.Length; i++)
+            {
+                randomNumbers[i] = GetRandom();
+            }
+
+            Console.WriteLine("Array of 10 random numbers:");
+            PrintArray(randomNumbers);
+
+            return randomNumbers;
+
+        }
+
+        private static int[] MultiplyRamdomNumbers(int[] randomNumbers)
+        {
+            int multiplier = GetRandom();
+            
+            for (var i = 0; i < randomNumbers.Length; i++)
+            {
+                randomNumbers[i] *= multiplier;
+            }
+
+            Console.WriteLine($"Array of 10 random numbers after multiplying by {multiplier}");
+            PrintArray(randomNumbers);
+
+            return randomNumbers;
+        }
+
+        private static int[] SortRandomNumbersByDescending(int[] randomNumbers)
+        {
+            Array.Sort(randomNumbers, (a, b) => b.CompareTo(a));
+
+            Console.WriteLine("Array sorted by descending");
+            PrintArray(randomNumbers);
+
+            return randomNumbers;
+        }
+
+        private static double CalculateAverage(int[] randomNumbers)
+        {
+            var average = randomNumbers.Average();
+
+            Console.WriteLine($"Average value: {average}");
+
+            return average;
+        }
+
+        private static int GetRandom()
+        {
+            return Random.Next(1, 10);
+        }
+
+        private static void PrintArray(int[] randomNumbers)
+        {
+            foreach (var number in randomNumbers)
+            {
+                Console.Write($"{number}, ");
+            }
+
+            Console.WriteLine();
         }
     }
 }
