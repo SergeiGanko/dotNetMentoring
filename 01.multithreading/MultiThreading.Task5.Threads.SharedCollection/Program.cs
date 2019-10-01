@@ -17,7 +17,7 @@ namespace MultiThreading.Task5.Threads.SharedCollection
             Console.WriteLine("Use Thread, ThreadPool or Task classes for thread creation and any kind of synchronization constructions.");
             Console.WriteLine();
 
-            // feel free to add your code
+            TwoWaySignaling.Run();
 
             Console.ReadLine();
         }
