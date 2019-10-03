@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
 using MultiThreading.Task3.MatrixMultiplier.Matrices;
 using MultiThreading.Task3.MatrixMultiplier.Multipliers;
 
@@ -18,8 +20,40 @@ namespace MultiThreading.Task3.MatrixMultiplier.Tests
         [TestMethod]
         public void ParallelEfficiencyTest()
         {
-            // todo: implement a test method to check the size of the matrix which makes parallel multiplication more effective than
-            // todo: the regular one
+            var sw = new Stopwatch();
+            var multiplier = new MatricesMultiplier();
+            var parallelMultiplier = new MatricesMultiplierParallel();
+
+            for (var i = 1; i < 100; i++)
+            {
+                var firstMatrix = new Matrix(i, i, true);
+                var secondMatrix = new Matrix(i, i, true);
+
+                sw.Start();
+                var sequentialMatrixResult = multiplier.Multiply(firstMatrix, secondMatrix);
+                sw.Stop();
+                var sequentialElapsed = sw.Elapsed.TotalMilliseconds;
+                sw.Reset();
+                sw.Start();
+                var parallelMatrixResult = parallelMultiplier.Multiply(firstMatrix, secondMatrix);
+                var parallelElapsed = sw.Elapsed.TotalMilliseconds;
+                sw.Stop();
+                sw.Reset();
+
+                if (sequentialElapsed > parallelElapsed)
+                {
+                    Logger.LogMessage(
+                        $"Parallel multiplication is more effective than sequential for matrices size: [{i}, {i}]. Sequential multiplication elapsed time: {sequentialElapsed} ms. Parallel multiplication elapsed time: {parallelElapsed} ms");
+                }
+
+                for (int j = 0; j < sequentialMatrixResult.RowCount; j++)
+                {
+                    for (int k = 0; k < sequentialMatrixResult.ColCount; k++)
+                    {
+                        Assert.AreEqual(sequentialMatrixResult.GetElement(j, k), parallelMatrixResult.GetElement(j, k));
+                    }
+                }
+            }
         }
 
         #region private methods
