@@ -12,9 +12,9 @@ namespace AsyncAwait.CodeReviewChallenge.Models.Help
         {
             try
             {
-                DataService.RegisterAssistanceRequestAsync(requestorInfo);
+                await DataService.RegisterAssistanceRequestAsync(requestorInfo);
                 Thread.Sleep(7000); // this is just to be sure that the request is registered
-                string availableAssistentsInfo = await DataService.GetAvailableAssistenseAsync().ConfigureAwait(false);
+                string availableAssistentsInfo = await DataService.GetAvailableAssistenseAsync();
 
                 var sb = new StringBuilder();
                 sb.AppendLine($"Dear user, the assistance request is registered.");

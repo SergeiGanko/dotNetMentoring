@@ -14,23 +14,23 @@ namespace AsyncAwait.Task2.CodeReviewChallenge.Controllers
             return View();
         }
 
-        public ActionResult Privacy()
+        public async Task<ActionResult> Privacy()
         {
-            ViewBag.Message = DataService.GetPrivacyDataAsync().Result;
+            ViewBag.Message = await DataService.GetPrivacyDataAsync();
             return View();
         }
 
         public async Task<IActionResult> Help()
         {
             IAssistent assistent = new ManualAssistent();
-            ViewBag.RequestInfo = await assistent.RequestAssistanceAsync(HttpContext.Request.Path).ConfigureAwait(false);
+            ViewBag.RequestInfo = await assistent.RequestAssistanceAsync(HttpContext.Request.Path);
             return View();
         }
 
         public async Task<IActionResult> Faq()
         {
             IAssistent assistent = new FaqAssistent();
-            ViewBag.RequestInfo = await assistent.RequestAssistanceAsync(HttpContext.Request.Path).ConfigureAwait(false);
+            ViewBag.RequestInfo = await assistent.RequestAssistanceAsync(HttpContext.Request.Path);
             return View();
         }
 
