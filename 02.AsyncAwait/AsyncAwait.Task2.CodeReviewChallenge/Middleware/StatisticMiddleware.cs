@@ -17,11 +17,11 @@ namespace AsyncAwait.CodeReviewChallenge.Middleware
         public async Task InvokeAsync(HttpContext context)
         {   
             string path = context.Request.Path;
-            GrandStatistics.RegisterVisitAsync(path);
+            await GrandStatistics.RegisterVisitAsync(path);
 
             context.Response.Headers.Add(
             CustomHttpHeaders.TotalPageVisits,
-            GrandStatistics.GetVisitsCountAsync(path).GetAwaiter().GetResult().ToString());            
+            (await GrandStatistics.GetVisitsCountAsync(path)).ToString());
 
             await _next(context);
         }

@@ -23,11 +23,11 @@ namespace AsyncAwait.CodeReviewChallenge.Services
             }
         }
 
-        public static async void RegisterAssistanceRequestAsync(string userName)
+        public static async Task RegisterAssistanceRequestAsync(string userName)
         {
             using (HttpContent httpContent = new StringContent(userName))
             {
-                await _httpClient.PutAsync($"{BaseApiUrl}/v1/assistance/reg", httpContent).ConfigureAwait(false);
+                await _httpClient.PutAsync($"{BaseApiUrl}/v1/assistance/reg", httpContent);
             }
         }
 
