@@ -2,6 +2,16 @@
 {
     internal class Foo
     {
-        // add here some properties
+        public byte Number { get; } = 1;
+
+        public static string StaticProp { get; set; } = "Static Foo!";
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public double Price { get; set; }
+
+        public int Quantity { get; set; }
     }
 }
