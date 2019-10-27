@@ -86,7 +86,7 @@ namespace Expressions.Task3.E3SQueryProvider.Test
         {
             var translator = new ExpressionToFTSRequestTranslator();
             Expression<Func<EmployeeEntity, bool>> expression
-                = employee => employee.Workstation.EndsWith("IZHW006");
+                = employee => employee.Workstation.Contains("IZHW006");
 
             string translated = translator.Translate(expression);
             Assert.AreEqual("Workstation:(*IZHW006*)", translated);

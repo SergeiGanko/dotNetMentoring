@@ -33,6 +33,41 @@ namespace Expressions.Task3.E3SQueryProvider
 
                 return node;
             }
+
+            if (node.Method.DeclaringType == typeof(string))
+            {
+                switch (node.Method.Name)
+                {
+                    case nameof(string.Equals):
+                        Visit(node.Object);
+                        _resultStringBuilder.Append("(");
+                        Visit(node.Arguments);
+                        _resultStringBuilder.Append(")");
+                        return node;
+
+                    case nameof(string.StartsWith):
+                        Visit(node.Object);
+                        _resultStringBuilder.Append("(");
+                        Visit(node.Arguments);
+                        _resultStringBuilder.Append("*)");
+                        return node;
+
+                    case nameof(string.EndsWith):
+                        Visit(node.Object);
+                        _resultStringBuilder.Append("(*");
+                        Visit(node.Arguments);
+                        _resultStringBuilder.Append(")");
+                        return node;
+
+                    case nameof(string.Contains):
+                        Visit(node.Object);
+                        _resultStringBuilder.Append("(*");
+                        Visit(node.Arguments);
+                        _resultStringBuilder.Append("*)");
+                        return node;
+                }
+            }
+
             return base.VisitMethodCall(node);
         }
 
@@ -41,16 +76,30 @@ namespace Expressions.Task3.E3SQueryProvider
             switch (node.NodeType)
             {
                 case ExpressionType.Equal:
-                    if (!(node.Left.NodeType == ExpressionType.MemberAccess))
-                        throw new NotSupportedException(string.Format("Left operand should be property or field", node.NodeType));
 
-                    if (!(node.Right.NodeType == ExpressionType.Constant))
-                        throw new NotSupportedException(string.Format("Right operand should be constant", node.NodeType));
+                    Expression left = node.Left;
+                    Expression right = node.Right;
+
+                    if (node.Left.NodeType == ExpressionType.Constant &&
+                             node.Right.NodeType == ExpressionType.MemberAccess)
+                    {
+                        left = node.Right;
+                        right = node.Left;
+                    }
+
+                    Visit(left);
+                    _resultStringBuilder.Append("(");
+                    Visit(right);
+                    _resultStringBuilder.Append(")");
+
+                    break;
+
+                case ExpressionType.AndAlso:
 
                     Visit(node.Left);
-                    _resultStringBuilder.Append("(");
+                    _resultStringBuilder.Append(FTSRequestGenerator.QueriesSeparator);
                     Visit(node.Right);
-                    _resultStringBuilder.Append(")");
+
                     break;
 
                 default:
