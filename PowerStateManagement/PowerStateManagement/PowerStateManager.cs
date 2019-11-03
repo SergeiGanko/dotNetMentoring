@@ -5,6 +5,9 @@ using static PowerStateManagement.PowerManagementFunctionsWrapper;
 
 namespace PowerStateManagement
 {
+    [ComVisible(true)]
+    [Guid("46F768F6-6AEF-467F-A3F2-3897B6A82353")]
+    [ClassInterface(ClassInterfaceType.None)]
     public class PowerStateManager : IPowerStateManager
     {
         public long GetLastSleepTime()
