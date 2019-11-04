@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerStateManagement", "PowerStateManagement\PowerStateManagement.csproj", "{B55B1B73-22BC-427D-8880-C102CF473F51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerStateManagement", "PowerStateManagement\PowerStateManagement.csproj", "{B55B1B73-22BC-427D-8880-C102CF473F51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerStateManagement.Tests", "PowerStateManagement.Tests\PowerStateManagement.Tests.csproj", "{6CFB2638-D34D-4054-8316-6E4B38E7FE04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerStateManagement.Tests", "PowerStateManagement.Tests\PowerStateManagement.Tests.csproj", "{6CFB2638-D34D-4054-8316-6E4B38E7FE04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
