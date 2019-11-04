@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.779
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerStateManagement", "PowerStateManagement\PowerStateManagement.csproj", "{B55B1B73-22BC-427D-8880-C102CF473F51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerStateManagement.Tests", "PowerStateManagement.Tests\PowerStateManagement.Tests.csproj", "{6CFB2638-D34D-4054-8316-6E4B38E7FE04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B55B1B73-22BC-427D-8880-C102CF473F51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B55B1B73-22BC-427D-8880-C102CF473F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B55B1B73-22BC-427D-8880-C102CF473F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B55B1B73-22BC-427D-8880-C102CF473F51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CFB2638-D34D-4054-8316-6E4B38E7FE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CFB2638-D34D-4054-8316-6E4B38E7FE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CFB2638-D34D-4054-8316-6E4B38E7FE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CFB2638-D34D-4054-8316-6E4B38E7FE04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {264351A8-0EBE-4279-BF20-2ED47E3E472C}
+	EndGlobalSection
+EndGlobal
