@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac.Extras.DynamicProxy;
 using NLog;
 using RabbitMQ.Client;
 using ReplicationUtilities.Messaging;
@@ -12,9 +13,12 @@ using ReplicationUtilities.Models;
 
 namespace Producer
 {
+    [Intercept("method-tracer")]
     public class InputService : IInputService
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        private const string DirectoryPath = @"D:\source";
 
         private readonly NotifyFilters filter = NotifyFilters.FileName |
                                                 NotifyFilters.LastWrite |
@@ -24,13 +28,13 @@ namespace Producer
         private readonly IRabbitMqHelper _rabbitMqHelper;
         private readonly IModel _channel;
 
-        private object _lock = new object();
+        private readonly object _lock = new object();
 
-        public InputService(string directoryPath, IRabbitMqHelper rabbitMqHelper)
+        public InputService(IRabbitMqHelper rabbitMqHelper)
         {
             _fileWatcher = new FileSystemWatcher
             {
-                Path = directoryPath,
+                Path = DirectoryPath,
                 Filter = "*.pdf",
                 NotifyFilter = filter
             };
@@ -44,6 +48,7 @@ namespace Producer
         {
             _fileWatcher.Created += OnCreated;
             _fileWatcher.EnableRaisingEvents = true;
+            Console.WriteLine($" [*] InputService is started. Source folder: {DirectoryPath}");
         }
 
         private void OnCreated(object sender, FileSystemEventArgs e)

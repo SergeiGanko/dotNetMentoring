@@ -1,5 +1,5 @@
 ﻿using System;
-using ReplicationUtilities.Messaging;
+using Autofac;
 
 namespace Producer
 {
@@ -7,10 +7,9 @@ namespace Producer
     {
         static void Main()
         {
-            string path = @"D:\source";
-            IInputService inputService = new InputService(path, new RabbitMqHelper());
+            IContainer container = Bootstrapper.Bootstrap();
+            IInputService inputService = container.Resolve<IInputService>();
             inputService.Connect();
-            Console.WriteLine($" [*] InputService is started. Source folder: {path}");
 
             Console.WriteLine(" Press [Esc] to stop service and exit.");
             while (Console.ReadKey().Key != ConsoleKey.Escape) { }

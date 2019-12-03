@@ -1,5 +1,5 @@
 ﻿using System;
-using ReplicationUtilities.Messaging;
+using Autofac;
 
 namespace Consumer
 {
@@ -7,10 +7,9 @@ namespace Consumer
     {
         static void Main()
         {
-            string path = @"D:\destination";
-            ICentralServerService centralServerService = new CentralServerService(path, new RabbitMqHelper());
+            IContainer container = Bootstrapper.Bootstrap();
+            ICentralServerService centralServerService = container.Resolve<ICentralServerService>();
             centralServerService.Connect();
-            Console.WriteLine($" [*] CentralServerService is started. Destination folder: {path}");
 
             Console.WriteLine(" Press [Esc] to stop service and exit.");
             while (Console.ReadKey().Key != ConsoleKey.Escape) { }

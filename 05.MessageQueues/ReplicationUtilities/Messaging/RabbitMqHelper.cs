@@ -1,10 +1,12 @@
 ﻿using System;
+using Autofac.Extras.DynamicProxy;
 using NLog;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace ReplicationUtilities.Messaging
 {
+    [Intercept("method-tracer")]
     public class RabbitMqHelper : IRabbitMqHelper
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
