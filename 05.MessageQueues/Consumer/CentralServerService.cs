@@ -15,19 +15,21 @@ namespace Consumer
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
+        private const string DirectoryPath = @"D:\destination";
+
         private readonly IRabbitMqHelper _rabbitMqHelper;
         private readonly IModel _channel;
-        private readonly string _path;
+        
         private List<Chunk> _chunks = new List<Chunk>();
 
-        public CentralServerService(string path, IRabbitMqHelper rabbitMqHelper)
+        public CentralServerService(IRabbitMqHelper rabbitMqHelper)
         {
             _rabbitMqHelper = rabbitMqHelper;
-            _path = path;
             // Create connection, channel and declare exchange
             _channel = _rabbitMqHelper.CreateChannel(RabbitMqConstants.RabbitMqExchange);
         }
 
+        [LoggingAspect]
         public void Connect()
         {
             if (_channel.IsOpen)
@@ -49,6 +51,8 @@ namespace Consumer
 
                 // Start consuming messages from queue
                 _channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
+
+                Console.WriteLine($" [*] CentralServerService is started. Destination folder: {DirectoryPath}");
             }
             else
             {
@@ -114,10 +118,11 @@ namespace Consumer
 
         private void SaveToFile(string fileName, byte[] content)
         {
-            var fullPath = Path.Combine(_path, $"{fileName}.pdf");
+            var fullPath = Path.Combine(DirectoryPath, $"{fileName}.pdf");
             File.WriteAllBytes(fullPath, content);
         }
 
+        [LoggingAspect]
         public void Disconnect()
         {
             _rabbitMqHelper?.Dispose();
